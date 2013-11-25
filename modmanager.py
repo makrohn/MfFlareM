@@ -1,5 +1,17 @@
+import random
+from urllib2 import urlopen
+from json import load
+
+versions = ["0.15", "0.16", "0.17", "0.18", "0.19", "1.0"]
+version = random.choice(versions)
+
 print "Welcome to the FLARE Mods Manager!"
+print "You are running FLARE Version", version
+print "(Version number set randomly for demonstration)"
+
 done = False
+modUrl = ""
+
 while done == False:
     print "Which of the following mods would you like to install?"
     print " (1) Flare Alpha Demo"
@@ -8,27 +20,58 @@ while done == False:
     print " (4) Polymorphable"
     print " (5) Valley of Concordia"
     print " (6) Other"
+    print " (exit) Exit Manager"
     modChoice = raw_input("Please choose one: ")
+    if modChoice == "exit":
+        break
     try:
         modChoice = int(modChoice)
         if modChoice == 1:
-            print "https://github.com/clintbellanger/flare-game.git"
+            modUrl = "https://github.com/clintbellanger/flare-game.git"
         if modChoice == 2:
-            print "https://github.com/clintbellanger/flare-game.git"
+            modUrl = "https://github.com/clintbellanger/flare-game.git"
             print "Branch:  Empyrean"
         if modChoice == 3:
-            print "https://github.com/clintbellanger/wandercall.git"
+            modUrl = "https://github.com/clintbellanger/wandercall.git"
         if modChoice == 4:
-            print "https://github.com/makrohn/polymorphable.git"
+            modUrl = "https://github.com/makrohn/polymorphable.git"
         if modChoice == 5:
-            print "https://github.com/makrohn/concordia.git"
+            modUrl = "https://github.com/makrohn/concordia.git"
         if modChoice == 6:
             modUrl = raw_input("Please type a GitHub repository of mod you'd like to install: ")
             if "http" not in modUrl:
                 print "Valid URLs must be either http or https."
             else:
                 print modUrl
-        else:
-            print "Invalid option"
     except:
         print "Invalid Option"
+    if modUrl != "":
+        apiUrl = modUrl.replace(".git", "")
+        apiUrl = apiUrl.replace("github.com", "api.github.com/repos")
+        print apiUrl
+        tags = load(urlopen(apiUrl + "/tags"))
+        versionFound = False
+        for tagdata in tags:
+            print tagdata['name']
+            if version in tagdata['name'] and versionFound == False:
+                versionFound = True
+                download = ""
+                while download != "Y" or "N":
+                    download = raw_input("Version of mod matches your game version.  Download?")
+                    if download == "Y":
+                        print "Downloading!"
+                        break
+                    if download == "N":
+                        print "Okay!"
+                        break
+        if versionFound == False:
+            download = ""
+            while download != "Y" or "N":
+                download = raw_input("Matching version not found.  Download latest?")
+                if download == "Y":
+                    print "Downloading!"
+                    break
+                if download == "N":
+                    print "Okay!"
+                    break
+    modUrl = ""
