@@ -76,6 +76,11 @@ while done == False:
                     download = raw_input("Version of mod matches your game version.  Download?")
                     if download == "Y":
                         print "Downloading!"
+                        zipball = urlopen(tagdata['zipball_url'])
+                        zipball = zipball.read()
+                        zipfile = open('mod.zip', 'w')
+                        zipfile.write(zipball)
+                        zipfile.close()
                         break
                     if download == "N":
                         print "Okay!"
@@ -86,6 +91,11 @@ while done == False:
                 download = raw_input("Matching version not found.  Download latest?")
                 if download == "Y":
                     print "Downloading!"
+                    zipball = urlopen(apiUrl + "/zipball/master")
+                    zipball = zipball.read()
+                    zipfile = open('mod.zip', 'w')
+                    zipfile.write(zipball)
+                    zipfile.close()
                     break
                 if download == "N":
                     print "Okay!"
