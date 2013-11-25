@@ -39,7 +39,7 @@ while done == False:
     print " (6) Other"
     print " (exit) Exit Manager"
     modChoice = raw_input("Please choose one: ")
-    if modChoice == "exit":
+    if modChoice.lower() == "exit":
         break
     try:
         modChoice = int(modChoice)
@@ -65,7 +65,7 @@ while done == False:
     if modUrl != "":
         apiUrl = modUrl.replace(".git", "")
         apiUrl = apiUrl.replace("github.com", "api.github.com/repos")
-        print apiUrl
+#        print apiUrl
         tags = load(urlopen(apiUrl + "/tags"))
         versionFound = False
         for tagdata in tags:
@@ -73,8 +73,8 @@ while done == False:
                 versionFound = True
                 download = ""
                 while download != "Y" or "N":
-                    download = raw_input("Version of mod matches your game version.  Download?")
-                    if download == "Y":
+                    download = raw_input("Version of mod matches your game version.  Download? [Y/N] ")
+                    if download.upper() == "Y":
                         print "Downloading!"
                         zipball = urlopen(tagdata['zipball_url'])
                         zipball = zipball.read()
@@ -82,14 +82,14 @@ while done == False:
                         zipfile.write(zipball)
                         zipfile.close()
                         break
-                    if download == "N":
+                    if download.upper() == "N":
                         print "Okay!"
                         break
         if versionFound == False:
             download = ""
             while download != "Y" or "N":
-                download = raw_input("Matching version not found.  Download latest?")
-                if download == "Y":
+                download = raw_input("Matching version not found.  Download latest?[Y/N] ")
+                if download.upper() == "Y":
                     print "Downloading!"
                     zipball = urlopen(apiUrl + "/zipball/master")
                     zipball = zipball.read()
@@ -97,7 +97,7 @@ while done == False:
                     zipfile.write(zipball)
                     zipfile.close()
                     break
-                if download == "N":
+                if download.upper() == "N":
                     print "Okay!"
                     break
     modUrl = ""
