@@ -41,27 +41,25 @@ while done == False:
     modChoice = raw_input("Please choose one: ")
     if modChoice.lower() == "exit":
         break
-    try:
-        modChoice = int(modChoice)
-        if modChoice == 1:
-            modUrl = "https://github.com/clintbellanger/flare-game.git"
-        if modChoice == 2:
-            modUrl = "https://github.com/clintbellanger/flare-game.git"
-            print "Branch:  Empyrean"
-        if modChoice == 3:
-            modUrl = "https://github.com/clintbellanger/wandercall.git"
-        if modChoice == 4:
-            modUrl = "https://github.com/makrohn/polymorphable.git"
-        if modChoice == 5:
-            modUrl = "https://github.com/makrohn/concordia.git"
-        if modChoice == 6:
-            modUrl = raw_input("Please type a GitHub repository of mod you'd like to install: ")
-            if "http" not in modUrl:
-                print "Valid URLs must be either http or https."
-            else:
-                print modUrl
-    except:
-        print "Invalid Option"
+    elif modChoice == "1":
+        modUrl = "https://github.com/clintbellanger/flare-game.git"
+    elif modChoice == "2":
+        modUrl = "https://github.com/clintbellanger/flare-game.git"
+        print "Branch:  Empyrean"
+    elif modChoice == "3":
+        modUrl = "https://github.com/clintbellanger/wandercall.git"
+    elif modChoice == "4":
+        modUrl = "https://github.com/makrohn/polymorphable.git"
+    elif modChoice == "5":
+        modUrl = "https://github.com/makrohn/concordia.git"
+    elif modChoice == "6":
+        modUrl = raw_input("Please type a GitHub repository of mod you'd like to install: ")
+        if "http" not in modUrl:
+            print "Valid URLs must be either http or https."
+        else:
+            print modUrl
+    else:
+        print "Invalid Choice"
     if modUrl != "":
         apiUrl = modUrl.replace(".git", "")
         apiUrl = apiUrl.replace("github.com", "api.github.com/repos")
